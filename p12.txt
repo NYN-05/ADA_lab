@@ -1,0 +1,101 @@
+/* Program for N Queen's problem using Backtracking */
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+int b[20], c;
+
+void print(int n) {
+    printf("S%d:\n", ++c);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++)
+            printf("%c ", b[i] == j ? 'Q' : '*');
+        printf("\n");
+    }
+}
+
+int place(int r, int col) {
+    for (int i = 1; i < r; i++)
+        if (b[i] == col || abs(b[i] - col) == abs(i - r))
+            return 0;
+    return 1;
+}
+
+void queen(int r, int n) {
+    for (int col = 1; col <= n; col++)
+        if (place(r, col)) {
+            b[r] = col;
+            if (r == n) print(n);
+            else queen(r + 1, n);
+        }
+}
+
+int main() {
+    int n;
+    printf("Enter number of Queens: ");
+    scanf("%d", &n);
+    queen(1, n);
+    return 0;
+}
+/*
+Enter number of Queens: 5
+S1:
+Q * * * * 
+* * Q * * 
+* * * * Q 
+* Q * * * 
+* * * Q * 
+S2:
+Q * * * * 
+* * * Q * 
+* Q * * * 
+* * * * Q 
+* * Q * * 
+S3:
+* Q * * * 
+* * * Q * 
+Q * * * * 
+* * Q * * 
+* * * * Q 
+S4:
+* Q * * * 
+* * * * Q 
+* * Q * * 
+Q * * * * 
+* * * Q * 
+S5:
+* * Q * * 
+Q * * * * 
+* * * Q * 
+* Q * * * 
+* * * * Q 
+S6:
+* * Q * * 
+* * * * Q 
+* Q * * * 
+* * * Q * 
+Q * * * * 
+S7:
+* * * Q * 
+Q * * * * 
+* * Q * * 
+* * * * Q 
+* Q * * * 
+S8:
+* * * Q * 
+* Q * * * 
+* * * * Q 
+* * Q * * 
+Q * * * * 
+S9:
+* * * * Q 
+* Q * * * 
+* * * Q * 
+Q * * * * 
+* * Q * * 
+S10:
+* * * * Q 
+* * Q * * 
+Q * * * * 
+* * * Q * 
+* Q * * * 
+*/

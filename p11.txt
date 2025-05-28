@@ -1,0 +1,42 @@
+/* Program to implement Merge Sort */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define MAX 5000
+
+int a[MAX];
+void merge(int l, int m, int h) {
+    int t[MAX], i = l, j = m + 1, k = l;
+    while (i <= m && j <= h)
+        t[k++] = a[i] <= a[j] ? a[i++] : a[j++];
+    while (i <= m) t[k++] = a[i++];
+    while (j <= h) t[k++] = a[j++];
+    for (i = l; i <= h; i++) a[i] = t[i];
+}
+
+void merge_sort(int l, int h) {
+    if (l < h) {
+        int m = (l + h) / 2;
+        merge_sort(l, m);
+        merge_sort(m + 1, h);
+        merge(l, m, h);
+    }
+}
+
+int main() {
+    int n, i;
+    printf("Enter the number of elements : ");
+    scanf("%d", &n);
+    for (i = 0; i < n; i++) a[i] = rand() % n + 1;
+    clock_t s = clock();
+    merge_sort(0, n - 1);
+    printf("%d: %ld ns\n", n, (clock() - s) * 1000000000 / CLOCKS_PER_SEC);
+    return 0;
+}
+// Output:
+// Enter the number of elements : 20
+// Unsorted list is :
+// 4 7 18 16 14 16 7 13 10 2 3 8 11 20 4 7 1 7 13 17
+// Sorted list is :
+// 1 2 3 4 4 7 7 7 7 8 10 11 13 13 14 16 16 17 18 20
+// 20 = 26.000000 Nano Seconds
