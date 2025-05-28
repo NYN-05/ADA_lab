@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+void warshall(int p[10][10], int n) {
+	for (int k = 0; k < n; k++)
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < n; j++)
+				p[i][j] = p[i][j] || (p[i][k] && p[k][j]);
+}
+
+int main() {
+	int p[10][10] = {0}, n, e, u, v;
+
+	printf("Enter number of vertices: ");
+	scanf("%d", &n);
+	printf("Enter number of edges: ");
+	scanf("%d", &e);
+
+	printf("Enter edges (u v):\n");
+	for (int i = 0; i < e; i++) {
+		scanf("%d%d", &u, &v);
+		p[u][v] = 1;
+	}
+
+	printf("Input matrix:\n");
+	for (int i = 0; i < n; i++, printf("\n"))
+		for (int j = 0; j < n; j++)
+			printf("%d ", p[i][j]);
+
+	warshall(p, n);
+
+	printf("Transitive closure:\n");
+	for (int i = 0; i < n; i++, printf("\n"))
+		for (int j = 0; j < n; j++)
+			printf("%d ", p[i][j]);
+
+	return 0;
+}
