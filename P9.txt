@@ -2,31 +2,31 @@
 #include <stdlib.h>
 #include <time.h>
 
-void selectionsort(long int arr[], long int n) {
-	for (long int i = 0; i < n - 1; i++) {
-		long int midx = i;
-		for (long int j = i + 1; j < n; j++)
+void selectionsort(int arr[], int n) {
+	for (int i = 0; i < n ; i++) {
+		int midx = i;
+		for (int j = i + 1; j < n; j++)
 			if (arr[j] < arr[midx])
 				midx = j;
-		long int tmp = arr[midx];
+		int tmp = arr[midx];
 		arr[midx] = arr[i];
 		arr[i] = tmp;
 	}
 }
 
 int main() {
-	long int n = 1000;
+	int n = 1000;
 	double tim1[10];
 	printf("Input Size\tSelection Sort Time (ms)\n");
 	for (int it = 0; it < 5; it++) {
-		long int a[n];
+		int a[n];
 		for (int i = 0; i < n; i++)
 			a[i] = rand() % n + 1;
 		clock_t start = clock();
 		selectionsort(a, n);
 		clock_t end = clock();
 		tim1[it] = ((double)(end - start)) / CLOCKS_PER_SEC * 1000.0;
-		printf("%ld\t\t%.3f ms\n", n, tim1[it]);
+		printf("%d\t\t%.3f ms\n", n, tim1[it]);
 		n += 1000;
 	}
 	return 0;
