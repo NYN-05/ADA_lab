@@ -1,62 +1,33 @@
 #include <stdio.h>
-void main()
-{
-	int cur_w,n;
-	float tot_v;
-	int p[10],w[10],W;
-	int i, maxi;
-	int used[10];
-	printf("Enter the no. of items:\n");
-	scanf("%d",&n);
-	printf("Enter the weight and price of all items:\n");
-	for(i=0; i<n; i++)
-	{
-		scanf("%d%d",&w[i],&p[i]);
-	}
-	printf("Enter the capacity of knapsack:\n");
-	scanf("%d",&W);
-	for (i = 0; i < n; ++i)
-		used[i] = 0;
-	cur_w = W;
-	while (cur_w > 0)
-	{
-		maxi = -1;
-		for (i = 0; i < n; ++i)
-			if ((used[i] == 0) &&
-			        ((maxi == -1) || ((float)w[i]/p[i] > (float)w[maxi]/p[maxi])))
-				maxi = i;
-		used[maxi] = 1;
-		cur_w -= p[maxi];
-		tot_v += w[maxi];
-		if (cur_w >= 0)
-			printf("Added object %d (%d, %d) completely in the bag. Space left:
-			       %d.\n", maxi + 1, w[maxi], p[maxi], cur_w);
-			       else
-			{
-				printf("Added %d%% (%d, %d) of object %d in the bag.\n", (int)((1 +
-				        (float)cur_w/p[maxi]) * 100), w[maxi], p[maxi], maxi + 1);
-				tot_v -= w[maxi];
-				tot_v += (1 + (float)cur_w/p[maxi]) * w[maxi];
-			}
-	}
-	printf("Filled the bag with objects worth %.2f.\n", tot_v);
+#define MAX 50
+
+int main() {
+    float w[MAX], p[MAX], r[MAX], cap, tp = 0;
+    int n, i, j;
+
+    printf("Enter number of items: ");
+    scanf("%d", &n);
+    for (i = 0; i < n; i++) {
+        printf("Enter weight and profit for item %d: ", i + 1);
+        scanf("%f %f", &w[i], &p[i]);
+        r[i] = p[i] / w[i];
+    }
+    printf("Enter knapsack capacity: ");
+    scanf("%f", &cap);
+
+    for (i = 0; i < n - 1; i++)
+        for (j = i + 1; j < n; j++)
+            if (r[i] < r[j]) {
+                float t = r[i]; r[i] = r[j]; r[j] = t;
+                t = w[i]; w[i] = w[j]; w[j] = t;
+                t = p[i]; p[i] = p[j]; p[j] = t;
+            }
+
+    for (i = 0; i < n && w[i] <= cap; i++)
+        tp += p[i], cap -= w[i];
+    if (i < n)
+        tp += r[i] * cap;
+
+    printf("Maximum profit: %.2f\n", tp);
+    return 0;
 }
-
-// Output:
-
-// Enter the no. of items:
-// 5
-// Enter the weight and price of all items:
-// 10 3
-// 15 3
-// 10 2
-// 12 5
-// 8 1
-// Enter the capacity of knapsack:
-// 10
-// Added object 5 (8, 1) completely in the bag. Space left: 9.
-// Added object 2 (15, 3) completely in the bag. Space left: 6.
-// Added object 3 (10, 2) completely in the bag. Space left: 4.
-// Added object 1 (10, 3) completely in the bag. Space left: 1.
-// Added 19% (12, 5) of object 4 in the bag.
-// Filled the bag with objects worth 45.40.
