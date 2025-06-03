@@ -18,10 +18,7 @@ int knapsack(int w[], int p[], int n, int M)
 }
 void main()
 {
-	int i,n;
-	int M; //capacity of knapsack
-	int w[10]; //weight of items
-	int p[10]; //value of items
+	int i,n,M,w[10],p[10];
 	printf("Enter the no. of items:\n");
 	scanf("%d",&n);
 	printf("Enter the weight and price of all items:\n");
@@ -31,11 +28,8 @@ void main()
 	}
 	printf("Enter the capacity of knapsack:\n");
 	scanf("%d",&M);
-	[DESIGN AND ANALYSIS OF ALGORITHMS LAB (BCSL404)]
 
-
-	printf("The maximum value of items that can be put into knapsack is =
-	       %d\n",knapsack(w,p,n,M));
+	printf("The maximum value of items that can be put into knapsack is =%d\n",knapsack(w,p,n,M));
 }
 
 // Output:
